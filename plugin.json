@@ -1,0 +1,40 @@
+{
+  "name": "siyuan-plugin-left-shortcuts",
+  "author": "zange",
+  "url": "https://github.com/tianxia704/siyuan-plugin-left-shortcuts",
+  "version": "0.1.1",
+  "minAppVersion": "3.7.0",
+  "kernels": [
+    "all"
+  ],
+  "backends": [
+    "all"
+  ],
+  "frontends": [
+    "desktop",
+    "browser-desktop"
+  ],
+  "disabledInPublish": true,
+  "displayName": {
+    "default": "Left Shortcuts",
+    "zh-CN": "左侧快捷入口"
+  },
+  "description": {
+    "default": "Add independent Marketplace and Settings shortcuts to the bottom of SiYuan's left sidebar.",
+    "zh-CN": "在思源左侧栏底部增加独立的集市和设置快捷入口，并保留原生入口。"
+  },
+  "readme": {
+    "default": "README.md",
+    "zh-CN": "README.zh_CN.md"
+  },
+  "keywords": [
+    "left sidebar",
+    "marketplace",
+    "settings",
+    "quick access",
+    "左侧栏",
+    "集市",
+    "设置",
+    "快捷入口"
+  ]
+}

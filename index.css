@@ -1,0 +1,8 @@
+.plugin-left-shortcuts__item {
+    cursor: pointer;
+}
+
+.plugin-left-shortcuts__item:focus-visible {
+    outline: 2px solid var(--b3-theme-primary);
+    outline-offset: -2px;
+}
