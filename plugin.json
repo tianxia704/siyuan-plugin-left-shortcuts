@@ -2,7 +2,7 @@
   "name": "siyuan-plugin-left-shortcuts",
   "author": "zange",
   "url": "https://github.com/tianxia704/siyuan-plugin-left-shortcuts",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "minAppVersion": "3.7.0",
   "kernels": [
     "all"

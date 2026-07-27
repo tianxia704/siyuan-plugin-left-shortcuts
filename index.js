@@ -188,64 +188,25 @@ class LeftShortcuts extends Plugin {
     }
 
     async openMarketplace() {
-        let dialog;
         try {
-            dialog = openSetting(this.app);
-        } catch (e) {
+            // 官方用法：openSetting(app, "bazaar") 直接定位到集市标签，
+            // 不依赖任何页面选择器或 DOM 轮询，适配各版本设置界面结构变化。
+            openSetting(this.app, "bazaar");
+        } catch (error) {
+            console.error("[Left Shortcuts] 打开集市失败", error);
             this.notifyUnavailable("marketplaceUnavailable", "暂时无法打开集市");
-            return;
         }
-        if (!dialog) {
-            this.notifyUnavailable("marketplaceUnavailable", "暂时无法打开集市");
-            return;
-        }
-        const bazaarTab = dialog.element.querySelector(
-            '.b3-tab-bar [data-name="bazaar"]'
-        );
-        if (bazaarTab) {
-            bazaarTab.dispatchEvent(new CustomEvent("click"));
-        }
-        await this.activateDownloadedPlugins(dialog);
     }
 
     async openSettings() {
         try {
+            // openSetting(app) 打开思源全局设置；
+            // 注意：this.openSetting() 才是打开本插件自身设置，二者不可混用。
             openSetting(this.app);
-        } catch (e) {
+        } catch (error) {
+            console.error("[Left Shortcuts] 打开设置失败", error);
             this.notifyUnavailable("settingsUnavailable", "暂时无法打开设置");
         }
-    }
-
-    async activateDownloadedPlugins(dialog) {
-        const root = dialog?.element || document;
-        for (let attempt = 0; attempt < 40; attempt++) {
-            const downloadedContent = root.querySelector("#configBazaarDownloaded");
-            const bazaarRoot = downloadedContent?.closest(".fn__flex-column");
-            const downloadedTab = bazaarRoot?.querySelector(
-                '.layout-tab-bar [data-type="downloaded"]'
-            );
-            const pluginFilter = bazaarRoot?.querySelector(
-                '.config-bazaar__panel[data-type="downloaded"] [data-type="myPlugin"]'
-            );
-            if (downloadedTab && pluginFilter) {
-                downloadedTab.click();
-                pluginFilter.click();
-                return true;
-            }
-
-            // The first visit can show SiYuan's marketplace trust screen instead
-            // of the downloaded list. Leave the native confirmation intact; after
-            // confirmation SiYuan opens Downloaded > Plugins by default.
-            const trustButton = root.querySelector(
-                '.config__panel .b3-button[data-type="trust"], ' +
-                '.config__panel .b3-button.fn__size200'
-            );
-            if (trustButton) {
-                return true;
-            }
-            await new Promise((resolve) => window.setTimeout(resolve, 50));
-        }
-        return false;
     }
 
     notifyUnavailable(key, fallback) {
