@@ -13,13 +13,18 @@
 
 不改变思源原来的功能，也不隐藏原来的入口，只是把两个常用操作放到了更容易点击的位置。
 
+## v0.1.2 更新
+
+- 打开“设置”与“集市”改为调用思源原生 API（不再模拟点击顶栏菜单），适配思源版本更新更稳定
+- 集市说明图片改为完整 https 链接，在集市详情页可正常显示
+
 ## 效果展示
 
 ### 1. 左侧栏快捷按钮
 
 启用插件后，左侧栏底部会增加“集市”和“设置”两个按钮。
 
-![左侧栏快捷按钮](screenshots/01-sidebar-buttons.png)
+![左侧栏快捷按钮](https://raw.githubusercontent.com/tianxia704/siyuan-plugin-left-shortcuts/main/screenshots/01-sidebar-buttons.png)
 
 两个按钮采用思源原生风格，尽量保持与现有界面协调。
 
@@ -29,7 +34,7 @@
 
 **集市 → 已下载 → 插件**
 
-![集市已下载插件视图](screenshots/02-marketplace-installed.png)
+![集市已下载插件视图](https://raw.githubusercontent.com/tianxia704/siyuan-plugin-left-shortcuts/main/screenshots/02-marketplace-installed.png)
 
 这样在启用、禁用、更新或者设置插件时，可以少点几步。
 
@@ -39,7 +44,7 @@
 
 点击“设置”按钮，可以直接打开思源原生设置界面。
 
-![设置界面](screenshots/03-settings.png)
+![设置界面](https://raw.githubusercontent.com/tianxia704/siyuan-plugin-left-shortcuts/main/screenshots/03-settings.png)
 
 适合经常调整编辑器、外观、文件、同步等选项的用户。
 
@@ -63,7 +68,7 @@
 
 ## 兼容性
 
-- 插件版本：**v0.1.1**
+- 插件版本：**v0.1.2**
 - 最低思源版本：**v3.7.0**
 - 当前主要测试版本：**思源 v3.7.3**
 - 支持桌面端和桌面浏览器端

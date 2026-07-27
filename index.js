@@ -1,6 +1,6 @@
 "use strict";
 
-const {Plugin, showMessage} = require("siyuan");
+const {Plugin, showMessage, openSetting} = require("siyuan");
 
 const SHORTCUTS = Object.freeze([
     {
@@ -188,57 +188,38 @@ class LeftShortcuts extends Plugin {
     }
 
     async openMarketplace() {
-        const trigger = document.getElementById("barPlugins");
-        if (!trigger) {
+        let dialog;
+        try {
+            dialog = openSetting(this.app);
+        } catch (e) {
             this.notifyUnavailable("marketplaceUnavailable", "暂时无法打开集市");
             return;
         }
-        this.closeNativeMenu();
-        trigger.click();
-        const opened = await this.clickNativeMenuItem("manage");
-        if (!opened) {
+        if (!dialog) {
             this.notifyUnavailable("marketplaceUnavailable", "暂时无法打开集市");
             return;
         }
-        await this.activateDownloadedPlugins();
+        const bazaarTab = dialog.element.querySelector(
+            '.b3-tab-bar [data-name="bazaar"]'
+        );
+        if (bazaarTab) {
+            bazaarTab.dispatchEvent(new CustomEvent("click"));
+        }
+        await this.activateDownloadedPlugins(dialog);
     }
 
     async openSettings() {
-        const trigger = document.getElementById("barWorkspace");
-        if (!trigger) {
-            this.notifyUnavailable("settingsUnavailable", "暂时无法打开设置");
-            return;
-        }
-        this.closeNativeMenu();
-        trigger.click();
-        const opened = await this.clickNativeMenuItem("config");
-        if (!opened) {
+        try {
+            openSetting(this.app);
+        } catch (e) {
             this.notifyUnavailable("settingsUnavailable", "暂时无法打开设置");
         }
     }
 
-    closeNativeMenu() {
-        window.siyuan?.menus?.menu?.remove?.();
-    }
-
-    async clickNativeMenuItem(itemId) {
+    async activateDownloadedPlugins(dialog) {
+        const root = dialog?.element || document;
         for (let attempt = 0; attempt < 40; attempt++) {
-            const menuElement =
-                window.siyuan?.menus?.menu?.element ||
-                document.getElementById("commonMenu");
-            const item = menuElement?.querySelector(`[data-id="${itemId}"]`);
-            if (item && !item.closest(".fn__none")) {
-                item.click();
-                return true;
-            }
-            await new Promise((resolve) => window.setTimeout(resolve, 50));
-        }
-        return false;
-    }
-
-    async activateDownloadedPlugins() {
-        for (let attempt = 0; attempt < 40; attempt++) {
-            const downloadedContent = document.getElementById("configBazaarDownloaded");
+            const downloadedContent = root.querySelector("#configBazaarDownloaded");
             const bazaarRoot = downloadedContent?.closest(".fn__flex-column");
             const downloadedTab = bazaarRoot?.querySelector(
                 '.layout-tab-bar [data-type="downloaded"]'
@@ -255,7 +236,7 @@ class LeftShortcuts extends Plugin {
             // The first visit can show SiYuan's marketplace trust screen instead
             // of the downloaded list. Leave the native confirmation intact; after
             // confirmation SiYuan opens Downloaded > Plugins by default.
-            const trustButton = document.querySelector(
+            const trustButton = root.querySelector(
                 '.config__panel .b3-button[data-type="trust"], ' +
                 '.config__panel .b3-button.fn__size200'
             );
