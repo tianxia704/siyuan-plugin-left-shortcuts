@@ -1,88 +1,37 @@
-# 左侧快捷入口
+# Left Shortcuts
 
-> **注意：当前版本尚未提供英文介绍。** 本 README 文件为中文副本兜底，主要参考 [README.zh_CN.md](README.zh_CN.md)。
+Add two independent native-style buttons to SiYuan's lower-left dock by default:
 
----
+- Marketplace: opens Marketplace → Downloaded → Plugins
+- Settings: opens SiYuan Settings
 
-# 左侧快捷入口
+The original SiYuan entries remain unchanged. Disabling or uninstalling this plugin removes only the added shortcuts.
 
-平时使用思源笔记时，需要打开插件管理和设置界面。
+## Design
 
-思源原来的入口功能没有问题，但操作路径稍长，尤其是在调整插件、主题或者软件设置时，总感觉不够顺手。
+- Move each shortcut independently through SiYuan's native context menu: left top, left bottom, right top, right bottom, bottom left, or bottom right
+- Persists the selected positions across restarts
+- Uses SiYuan's native dock registration and settings API
+- Works independently of Plugin Drawer's selected side
+- Supports desktop and desktop-browser frontends
 
-因此，我做了一个比较简单的小插件：**左侧快捷入口**。
+## Manual installation
 
-它会在思源左侧栏底部增加两个独立按钮：
+1. Fully quit SiYuan.
+2. Extract the manual package into:
 
-- **集市**
-- **设置**
+   ```text
+   {workspace}/data/plugins/
+   ```
 
-不改变思源原来的功能，也不隐藏原来的入口，只是把两个常用操作放到了更容易点击的位置。
+3. Verify the final path:
 
-## v0.1.3 更新
+   ```text
+   {workspace}/data/plugins/siyuan-plugin-left-shortcuts/plugin.json
+   ```
 
-- 打开“设置”调用 `openSetting(app)`，打开“集市”直接调用 `openSetting(app, "bazaar")` 定位到集市标签，不再依赖页面选择器或轮询 DOM，适配思源版本更新更稳定
-- 集市说明图片改为带版本标签的完整 https 链接，在集市详情页可正常显示且不受后续仓库改动影响
+4. Restart SiYuan and enable Left Shortcuts under Marketplace → Downloaded → Plugins.
 
-## 效果展示
+## Compatibility
 
-### 1. 左侧栏快捷按钮
-
-启用插件后，左侧栏底部会增加“集市”和“设置”两个按钮。
-
-![左侧栏快捷按钮](https://raw.githubusercontent.com/tianxia704/siyuan-plugin-left-shortcuts/v0.1.3/screenshots/01-sidebar-buttons.png)
-
-两个按钮采用思源原生风格，尽量保持与现有界面协调。
-
-### 2. 快速打开已下载插件
-
-点击“集市”按钮，会直接进入：
-
-**集市 → 已下载 → 插件**
-
-![集市已下载插件视图](https://raw.githubusercontent.com/tianxia704/siyuan-plugin-left-shortcuts/v0.1.3/screenshots/02-marketplace-installed.png)
-
-这样在启用、禁用、更新或者设置插件时，可以少点几步。
-
-集市按钮使用的是思源原生集市图标，不会再和普通插件入口混淆。
-
-### 3. 快速打开设置
-
-点击“设置”按钮，可以直接打开思源原生设置界面。
-
-![设置界面](https://raw.githubusercontent.com/tianxia704/siyuan-plugin-left-shortcuts/v0.1.3/screenshots/03-settings.png)
-
-适合经常调整编辑器、外观、文件、同步等选项的用户。
-
-## 插件特点
-
-这个插件目前主要解决一个很小但比较具体的问题：
-
-> **把常用的集市和设置入口放到左侧栏底部。**
-
-主要特点包括：
-
-- 左侧栏底部增加两个独立按钮
-- 集市按钮直达“已下载 → 插件”
-- 设置按钮直达思源原生设置
-- 使用思源原生图标和界面
-- 不隐藏、不移动原来的入口
-- 思源界面重建后会自动恢复按钮
-- 禁用或卸载插件后，新增按钮自动移除
-
-整个插件尽量保持简单，不接管思源原来的功能，只提供一条更方便的访问路径。
-
-## 兼容性
-
-- 插件版本：**v0.1.3**
-- 最低思源版本：**v3.7.0**
-- 当前主要测试版本：**思源 v3.7.3**
-- 支持桌面端和桌面浏览器端
-
-## 写在最后
-
-这个插件的功能并不复杂，主要是针对自己的日常使用习惯做的一点界面优化。
-
-如果你也经常进入插件管理和设置界面，希望它能让操作稍微顺手一些。
-
-目前仍是早期版本。如果遇到按钮没有显示、点击后界面不正确，或者有更合适的图标、位置和交互建议，欢迎在评论区反馈。
+Version 0.1.4 is verified against SiYuan 3.7.3 and supports SiYuan 3.7.0 or later.
